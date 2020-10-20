@@ -4,4 +4,4 @@
 
 ## 镜像列表
 
-* [kubectl](https://github.com/AlfieriChou/docker-image-manage/kubectl/README.md)
+* [kubectl](https://github.com/AlfieriChou/docker-image-manage/tree/main/kubectl)
