@@ -8,9 +8,7 @@ RUN apk add --no-cache \
 RUN addgroup -S chromium && \
     adduser -S -g chromium chromium && \
     mkdir /app && \
-    chown -R chromium:chromium /app && \
-    apk add --update -t deps curl && \
-    apk add --no-cache make gettext git nodejs nodejs-npm
+    chown -R chromium:chromium /app
 
 USER chromium
 
