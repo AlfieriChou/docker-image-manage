@@ -1,19 +1,45 @@
-FROM alpine:edge
+FROM alpine:latest
 
-RUN apk add --no-cache \
-      chromium nss freetype freetype-dev harfbuzz ca-certificates ttf-freefont \
-      nodejs npm \
-      dumb-init
+ARG BUILD_DATE
+ARG VCS_REF
 
-RUN addgroup -S chromium && \
-    adduser -S -g chromium chromium && \
-    mkdir /app && \
-    chown -R chromium:chromium /app
+LABEL org.label-schema.build-date=$BUILD_DATE \
+    org.label-schema.description="Chrome running in headless mode in a tiny Alpine image" \
+    org.label-schema.name="alpine-chrome" \
+    org.label-schema.schema-version="1.0.0" \
+    org.label-schema.vcs-ref=$VCS_REF \
+    org.label-schema.version="latest"
 
-USER chromium
+# Installs latest Chromium package.
+RUN echo "http://dl-cdn.alpinelinux.org/alpine/edge/main" > /etc/apk/repositories \
+    && echo "http://dl-cdn.alpinelinux.org/alpine/edge/community" >> /etc/apk/repositories \
+    && echo "http://dl-cdn.alpinelinux.org/alpine/edge/testing" >> /etc/apk/repositories \
+    && echo "http://dl-cdn.alpinelinux.org/alpine/v3.12/main" >> /etc/apk/repositories \
+    && apk upgrade -U -a \
+    && apk add \
+    libstdc++ \
+    chromium \
+    harfbuzz \
+    nss \
+    freetype \
+    ttf-freefont \
+    font-noto-emoji \
+    wqy-zenhei \
+    && rm -rf /var/cache/* \
+    && mkdir /var/cache/apk
 
-ENV CHROME_BIN=/usr/bin/chromium-browser
+COPY local.conf /etc/fonts/local.conf
 
-WORKDIR /app
+# Add Chrome as a user
+RUN mkdir -p /usr/src/app \
+    && adduser -D chrome \
+    && chown -R chrome:chrome /usr/src/app
+# Run Chrome as non-privileged
+USER chrome
+WORKDIR /usr/src/app
 
-ENTRYPOINT ["/usr/bin/dumb-init", "--"]
+ENV CHROME_BIN=/usr/bin/chromium-browser \
+    CHROME_PATH=/usr/lib/chromium/
+
+# Autorun chrome headless
+ENTRYPOINT ["chromium-browser", "--headless", "--use-gl=swiftshader", "--disable-software-rasterizer", "--disable-dev-shm-usage"]
