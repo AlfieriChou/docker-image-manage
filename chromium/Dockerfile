@@ -1,14 +1,10 @@
 FROM alpine:3.6
 
-RUN apk update && apk add --no-cache nmap && \
-    echo @edge http://nl.alpinelinux.org/alpine/edge/community >> /etc/apk/repositories && \
-    echo @edge http://nl.alpinelinux.org/alpine/edge/main >> /etc/apk/repositories && \
-    apk update && \
-    apk add --no-cache \
-      chromium \
-      harfbuzz \
-      "freetype>2.8" \
-      ttf-freefont \
-      nss
+RUN echo @edge https://mirrors.aliyun.com/alpine/edge/main >> /etc/apk/repositories \
+  && echo @edge https://mirrors.aliyun.com/alpine/edge/community >> /etc/apk/repositories \
+  && echo @edge https://mirrors.aliyun.com/alpine/edge/testing >> /etc/apk/repositories \
+  && apk update \
+  && apk upgrade --no-cache \
+  && apk add --no-cache chromium nss@edge freetype@edge freetype-dev@edge harfbuzz@edge ttf-freefont@edge wqy-zenhei@edge
 
 ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true
