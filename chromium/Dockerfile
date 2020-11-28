@@ -1,10 +1,27 @@
-FROM alpine:3.6
+FROM node:lts-alpine
+    
+ENV CHROME_BIN="/usr/bin/chromium-browser"\
+    PUPPETEER_SKIP_CHROMIUM_DOWNLOAD="true"
 
-RUN echo @edge https://mirrors.aliyun.com/alpine/edge/main >> /etc/apk/repositories \
-  && echo @edge https://mirrors.aliyun.com/alpine/edge/community >> /etc/apk/repositories \
-  && echo @edge https://mirrors.aliyun.com/alpine/edge/testing >> /etc/apk/repositories \
+RUN set -x \
   && apk update \
-  && apk upgrade --no-cache \
-  && apk add --no-cache chromium nss@edge freetype@edge freetype-dev@edge harfbuzz@edge ttf-freefont@edge wqy-zenhei@edge
+  && apk upgrade \
+  # replacing default repositories with edge ones
+  && echo "https://mirrors.aliyun.com/alpine/edge/testing" > /etc/apk/repositories \
+  && echo "https://mirrors.aliyun.com/alpine/edge/community" >> /etc/apk/repositories \
+  && echo "https://mirrors.aliyun.com/alpine/edge/main" >> /etc/apk/repositories \
+  \
+  # Add the packages
+  && apk add --no-cache dumb-init curl make gcc g++ python linux-headers binutils-gold gnupg libstdc++ nss chromium \
+  \
+  && npm install puppeteer@0.13.0 \
+  \
+  # Do some cleanup
+  && apk del --no-cache make gcc g++ python binutils-gold gnupg libstdc++ \
+  && rm -rf /usr/include \
+  && rm -rf /var/cache/apk/* /root/.node-gyp /usr/share/man /tmp/* \
+  && echo
 
-ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true
+ENTRYPOINT ["/usr/bin/dumb-init"]
+
+CMD node
