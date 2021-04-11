@@ -1,4 +1,4 @@
-FROM alpine:latest
+FROM node:lts-alpine AS base
 
 ARG BUILD_DATE
 ARG VCS_REF
@@ -14,9 +14,9 @@ LABEL org.label-schema.build-date=$BUILD_DATE \
 RUN echo "http://dl-cdn.alpinelinux.org/alpine/edge/main" > /etc/apk/repositories \
     && echo "http://dl-cdn.alpinelinux.org/alpine/edge/community" >> /etc/apk/repositories \
     && echo "http://dl-cdn.alpinelinux.org/alpine/edge/testing" >> /etc/apk/repositories \
-    && echo "http://dl-cdn.alpinelinux.org/alpine/v3.12/main" >> /etc/apk/repositories \
-    && apk upgrade -U -a \
-    && apk add \
+    && echo "http://dl-cdn.alpinelinux.org/alpine/v3.12/main" >> /etc/apk/repositories
+
+RUN apk add \
     libstdc++ \
     chromium \
     harfbuzz \
@@ -27,8 +27,6 @@ RUN echo "http://dl-cdn.alpinelinux.org/alpine/edge/main" > /etc/apk/repositorie
     wqy-zenhei \
     && rm -rf /var/cache/* \
     && mkdir /var/cache/apk
-
-COPY local.conf /etc/fonts/local.conf
 
 # Add Chrome as a user
 RUN mkdir -p /usr/src/app \
