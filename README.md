@@ -8,3 +8,4 @@
 * [chrome](https://github.com/AlfieriChou/docker-image-manage/tree/main/chrome)
 * [chromium](https://github.com/AlfieriChou/docker-image-manage/tree/main/chromium)
 * [deno-vr](https://github.com/AlfieriChou/docker-image-manage/tree/main/deno-vr)
+* [ffmpeg](https://github.com/AlfieriChou/docker-image-manage/tree/main/ffmpeg)

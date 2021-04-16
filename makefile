@@ -8,5 +8,5 @@ build:
 tag:
 	docker tag $(IMAGE_NAME):latest alfierichou/${IMAGE_NAME}:${VERSION}
 
-push:
+push: tag
 	docker push alfierichou/${IMAGE_NAME}:${VERSION}
