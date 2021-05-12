@@ -1,0 +1,3 @@
+FROM alfierichou/pnpm:latest
+
+RUN apk add --no-cache ffmpeg
