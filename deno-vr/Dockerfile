@@ -1,4 +1,4 @@
-FROM hayd/alpine-deno:latest as base
+FROM denoland/deno:alpine as base
 
 ENV VR_VERSION=1.0.0-beta.18
 
