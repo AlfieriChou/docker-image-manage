@@ -1,12 +1,12 @@
-DOCKERFILE_PATH ?= README.md
-IMAGE_NAME ?= test
-VERSION ?= 1.0.0
+DOCKERFILE_PATH ?= chromium/Dockerfile
+IMAGE_NAME ?= chromium
+VERSION ?= 1.0.2
 NAMESPACE ?= alfierichou
 
 build:
 	docker build -f $(DOCKERFILE_PATH) -t ${NAMESPACE}/$(IMAGE_NAME) .
 
-tag:
+tag: build
 	docker tag ${NAMESPACE}/$(IMAGE_NAME):latest ${NAMESPACE}/${IMAGE_NAME}:${VERSION}
 
 push: tag
