@@ -11,3 +11,4 @@ RUN set -x \
     ttf-freefont \
     chromium
 
+RUN chromium-browser --product-version

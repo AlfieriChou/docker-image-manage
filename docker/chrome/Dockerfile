@@ -28,6 +28,8 @@ RUN apk add \
     && rm -rf /var/cache/* \
     && mkdir /var/cache/apk
 
+RUN chromium-browser --product-version
+
 # Add Chrome as a user
 RUN mkdir -p /usr/src/app \
     && adduser -D chrome \

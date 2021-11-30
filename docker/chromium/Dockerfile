@@ -11,6 +11,4 @@ RUN set -x \
     ttf-freefont \
     chromium
 
-RUN node -v
-RUN npm -v
-RUN yarn -v
+RUN chromium-browser --product-version
