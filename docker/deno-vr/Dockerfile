@@ -1,6 +1,6 @@
 FROM denoland/deno:alpine as base
 
-ENV VR_VERSION=1.0.0-beta.18
+ENV VR_VERSION=1.3.0
 
 RUN deno install -qA -n vr https://deno.land/x/velociraptor@${VR_VERSION}/cli.ts
 
