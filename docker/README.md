@@ -10,3 +10,4 @@
 * [deno-vr](https://github.com/AlfieriChou/docker-image-manage/tree/main/docker/deno-vr)
 * [ffmpeg](https://github.com/AlfieriChou/docker-image-manage/tree/main/docker/ffmpeg)
 * [pnpm](https://github.com/AlfieriChou/docker-image-manage/tree/main/docker/pnpm)
+* [elasticsearch](https://hub.docker.com/r/bitnami/elasticsearch)
