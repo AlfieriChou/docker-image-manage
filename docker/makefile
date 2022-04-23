@@ -12,3 +12,6 @@ tag: build
 push: tag
 	docker push ${NAMESPACE}/${IMAGE_NAME}:${VERSION}
 	docker push ${NAMESPACE}/${IMAGE_NAME}:latest
+
+bash:
+	docker run --rm -it ${NAMESPACE}/${IMAGE_NAME}:${VERSION} /bin/sh
