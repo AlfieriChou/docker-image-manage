@@ -1,7 +1,7 @@
-DOCKERFILE_PATH ?= deno-vr/Dockerfile
 IMAGE_NAME ?= deno-vr
 VERSION ?= 1.0.2
 NAMESPACE ?= alfierichou
+DOCKERFILE_PATH ?= $(IMAGE_NAME)/Dockerfile
 
 build:
 	docker build -f $(DOCKERFILE_PATH) -t ${NAMESPACE}/$(IMAGE_NAME) .
